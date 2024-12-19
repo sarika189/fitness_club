@@ -1,114 +1,139 @@
+import Foundation
 import SwiftUI
 
 struct RegisterView: View {
-    @State private var isPasswordVisible = false
-    let genders = ["Male", "Female", "Other"]
+    @ObservedObject
+    var presenter: RegisterPresenter
+    
+    @ObservedObject
+    var router: RegisterRouter
+    
+    init(presenter: RegisterPresenter, router: RegisterRouter) {
+        self.presenter = presenter
+        self.router = router
+    }
     
     var body: some View {
-        Text("")
-//        VStack(spacing: 20) {
-//            Text("REGISTER")
-//                .fontWeight(.bold)
-//                .padding(.top, 30)
-//            // Name field
-//            TextField("Name", text: $userInfo.name)
-//                .padding()
-//                .background(Color(.systemGray6))
-//                .cornerRadius(10)
-//                .overlay(
-//                    RoundedRectangle(cornerRadius: 10)
-//                        .stroke(Color.purple, lineWidth: 1)
-//                )
-//
-//            // Email field
-//            TextField("Email", text: $userInfo.email)
-//                .padding()
-//                .background(Color(.systemGray6))
-//                .cornerRadius(10)
-//                .overlay(
-//                    RoundedRectangle(cornerRadius: 10)
-//                        .stroke(Color.purple, lineWidth: 1)
-//                )
-//                .autocapitalization(.none)
-//                .keyboardType(.emailAddress)
-//
-//            // Mobile number field
-//            TextField("Mobile Number", text: $userInfo.mobileNumber)
-//                .padding()
-//                .background(Color(.systemGray6))
-//                .cornerRadius(10)
-//                .overlay(
-//                    RoundedRectangle(cornerRadius: 10)
-//                        .stroke(Color.purple, lineWidth: 1)
-//                )
-//                .keyboardType(.phonePad)
-//
-//            // Password field with hide/unhide toggle
-//            ZStack(alignment: .trailing) {
-//                Group {
-//                    if isPasswordVisible {
-//                        TextField("Password", text: $userInfo.password)
-//                    } else {
-//                        SecureField("Password", text: $userInfo.password)
-//                    }
-//                }
-//                .padding()
-//                .background(Color(.systemGray6))
-//                .cornerRadius(10)
-//                .overlay(
-//                    RoundedRectangle(cornerRadius: 10)
-//                        .stroke(Color.purple, lineWidth: 1)
-//                )
-//
-//                Button(action: {
-//                    isPasswordVisible.toggle()
-//                }) {
-//                    Image(systemName: isPasswordVisible ? "eye.slash" : "eye")
-//                        .foregroundColor(.gray)
-//                        .padding()
-//                }
-//            }
-//
-//            // Gender field
-//            Picker("Gender", selection: $userInfo.gender) {
-//                ForEach(genders, id: \.self) {
-//                    Text($0)
-//                }
-//            }
-//            .pickerStyle(SegmentedPickerStyle())
-//            .padding(.top, 10)
-//
-//            // Register button
-//            Button(action: {
-//                print("Register tapped")
-//                // Additional registration logic
-//            }) {
-//                Text("Register")
-//                    .fontWeight(.bold)
-//                    .padding()
-//                    .frame(maxWidth: .infinity)
-//                    .background(Color.blue)
-//                    .cornerRadius(10)
-//                    .foregroundColor(.white)
-//            }
-//            .padding(.top, 20)
-//            .padding(.bottom, 40)
-//        }
-//        .padding()
-//        .background(
-//            LinearGradient(gradient: Gradient(colors: [.blue, .purple]), startPoint: .top, endPoint: .bottom)
-//                .cornerRadius(20)
-//                .shadow(color: .gray.opacity(0.4), radius: 10, x: 0, y: 10)
-//        )
-//
-//        .padding()
-      
+        VStack {
+            Text("Register an Account").fontWeight(.bold)
+            ScrollView {
+                VStack(spacing: 15) {
+                    RegisterTextField(name: $presenter.name,
+                                      title: "Name")
+                    RegisterTextField(name: $presenter.email,
+                                      title: "Email").autocapitalization(.none)
+                    RegisterTextField(name: $presenter.mobileNumber,
+                                      title: "Mobile Number")
+                    RegisterTextField(name: $presenter.password,
+                                      title: "Create Password",
+                                      isSecureField: true)
+                    Picker("Gender", selection: $presenter.gender) {
+                        ForEach(Gender.allCases, id: \.self) { gender in
+                            Text(gender.rawValue).bold()
+                        }
+                    }
+                    .pickerStyle(SegmentedPickerStyle())
+                    .padding(.top, 10)
+                    .frame(height: 35)
+                    HStack {
+                        SquareCheckmarkButton(isChecked: $presenter.isTermsAndConditionsChecked)
+                        Text("I agree with terms & conditions")
+                            .fontWeight(.light)
+                        Spacer()
+                    }
+                    .padding()
+                    Button(action: { presenter.completeRegistration() }) {
+                        Text("REGISTER")
+                            .customTextStyle(tintColor: .customPurple,
+                                             textColor: .white)
+                    }
+                }
+            }
+            .padding(.top, 20)
+            Spacer()
+        }
+        .navigationDestination(isPresented: $router.isRegistrationComplete,
+                               destination: {
+            router.navigateToDashboardView()
+        })
+        .errorAlert(errorMessage: presenter.error ?? "",
+                    isErrorPresented: isErrorPresented)
+        .padding([.leading, .trailing])
+    }
+    
+    private var isErrorPresented: Binding<Bool> {
+        Binding(get: { presenter.error != nil},
+                set: { if !$0 { presenter.error = nil }})
     }
 }
 
-struct RegisterView_Previews: PreviewProvider {
-    static var previews: some View {
-        RegisterView()
+struct SquareCheckmarkButton: View {
+    
+    private var isChecked: Binding<Bool>
+    
+    init(isChecked: Binding<Bool>) {
+        self.isChecked = isChecked
+    }
+    
+    var body: some View {
+        Button(action: {
+            isChecked.wrappedValue.toggle()
+        }) {
+            ZStack {
+                // Square background
+                RoundedRectangle(cornerRadius: 4)
+                    .stroke(isChecked.wrappedValue ? Color.green : Color.gray, lineWidth: 2)
+                    .frame(width: 25, height: 25)
+                    .background(isChecked.wrappedValue ? Color.blue : Color.clear)
+                    .cornerRadius(4)
+                // Checkmark
+                if isChecked.wrappedValue {
+                    Image(systemName: "checkmark")
+                        .foregroundColor(.white)
+                        .font(.system(size: 18, weight: .bold))
+                }
+            }
+        }
+        .buttonStyle(.plain)
     }
 }
 
+
+struct RegisterTextField: View {
+    
+    private let name: Binding<String>
+    private let title: String
+    private let isSecureField: Bool
+    
+    init(name: Binding<String>, title: String, isSecureField: Bool = false) {
+        self.name = name
+        self.title = title
+        self.isSecureField = isSecureField
+    }
+    
+    var body: some View {
+        VStack(alignment: .leading, spacing: 3) {
+            Text(title)
+                .font(.title3)
+            Group {
+                if isSecureField {
+                    SecureTextField(text: name, title: "Create Password", isPasswordVisible: false)
+                } else {
+                    TextField(title, text: name)
+                }
+            }
+            .font(.title3)
+            .frame(height: 40)
+            Capsule()
+                .foregroundColor(.black.opacity(0.3))
+                .frame(height: 2)
+            
+        }
+    }
+}
+
+enum Gender : String, CaseIterable{
+    case Male
+    case Female
+    case Other
+}

@@ -53,7 +53,7 @@ struct LoginView: View {
             .navigationBarBackButtonHidden(true)
         }
         .navigationDestination(isPresented: $loginRouter.isLoggedIn, destination: {DashboardView()})
-     
+        
     }
 }
 
@@ -131,7 +131,6 @@ struct CustomTextfield: View{
                 .fontWeight(.semibold)
             Group{
                 if isSecureTextField {
-//                    SecureField("", text: text)
                     SecureTextField(text: text, title: "Password", isPasswordVisible: false)
                 }else{
                     TextField("", text: text).autocapitalization(.none)
@@ -165,7 +164,6 @@ struct SecureTextField: View{
                     SecureField("", text: text)
                 }
             }
-           
             Button(action: {
                 isPasswordVisible.toggle()
             }) {

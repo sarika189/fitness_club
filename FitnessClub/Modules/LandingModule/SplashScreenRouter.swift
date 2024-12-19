@@ -14,7 +14,9 @@ class SplashScreenRouter{
     }
     
     func navigateToRegisterView() -> RegisterView{
-        
-        return RegisterView()
+        let router = RegisterRouter()
+        let interactor = RegisterInteractor()
+        let presenter = RegisterPresenter(interactor: interactor, router: router)
+        return RegisterView(presenter: presenter, router: router)
     }
 }

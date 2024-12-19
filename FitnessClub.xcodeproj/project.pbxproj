@@ -22,7 +22,6 @@
 		6A0C34A52D123E3A00D97C6C /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0C34A42D123E3A00D97C6C /* RegisterView.swift */; };
 		6A0C34A72D123E5300D97C6C /* RegisterInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0C34A62D123E5300D97C6C /* RegisterInteractor.swift */; };
 		6A0C34A92D123E6C00D97C6C /* RegisterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0C34A82D123E6C00D97C6C /* RegisterPresenter.swift */; };
-		6A0C34AB2D123E8000D97C6C /* RegisterEntity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0C34AA2D123E8000D97C6C /* RegisterEntity.swift */; };
 		6A0C34AD2D123E9000D97C6C /* RegisterRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0C34AC2D123E9000D97C6C /* RegisterRouter.swift */; };
 		6A0C34B02D12509500D97C6C /* DashboardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0C34AF2D12509500D97C6C /* DashboardView.swift */; };
 		6A0C34B42D12A0E700D97C6C /* Services.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0C34B32D12A0E700D97C6C /* Services.swift */; };
@@ -30,6 +29,7 @@
 		6A0C34B92D12DCD800D97C6C /* LoginValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A0C34B82D12DCD800D97C6C /* LoginValidation.swift */; };
 		6A45F0502D122D1600B6468B /* SplashScreenRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A45F04F2D122D1600B6468B /* SplashScreenRouter.swift */; };
 		6A9E0BD82D13D9D40044AFDD /* UserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9E0BD72D13D9D40044AFDD /* UserManager.swift */; };
+		6A9E0BDA2D13F33A0044AFDD /* ExtensionColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6A9E0BD92D13F33A0044AFDD /* ExtensionColors.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,7 +68,6 @@
 		6A0C34A42D123E3A00D97C6C /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
 		6A0C34A62D123E5300D97C6C /* RegisterInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterInteractor.swift; sourceTree = "<group>"; };
 		6A0C34A82D123E6C00D97C6C /* RegisterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPresenter.swift; sourceTree = "<group>"; };
-		6A0C34AA2D123E8000D97C6C /* RegisterEntity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterEntity.swift; sourceTree = "<group>"; };
 		6A0C34AC2D123E9000D97C6C /* RegisterRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterRouter.swift; sourceTree = "<group>"; };
 		6A0C34AF2D12509500D97C6C /* DashboardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardView.swift; sourceTree = "<group>"; };
 		6A0C34B32D12A0E700D97C6C /* Services.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Services.swift; sourceTree = "<group>"; };
@@ -76,6 +75,7 @@
 		6A0C34B82D12DCD800D97C6C /* LoginValidation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginValidation.swift; sourceTree = "<group>"; };
 		6A45F04F2D122D1600B6468B /* SplashScreenRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashScreenRouter.swift; sourceTree = "<group>"; };
 		6A9E0BD72D13D9D40044AFDD /* UserManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
+		6A9E0BD92D13F33A0044AFDD /* ExtensionColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionColors.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -181,7 +181,6 @@
 				6A0C34A42D123E3A00D97C6C /* RegisterView.swift */,
 				6A0C34A62D123E5300D97C6C /* RegisterInteractor.swift */,
 				6A0C34A82D123E6C00D97C6C /* RegisterPresenter.swift */,
-				6A0C34AA2D123E8000D97C6C /* RegisterEntity.swift */,
 				6A0C34AC2D123E9000D97C6C /* RegisterRouter.swift */,
 			);
 			path = RegisterModule;
@@ -214,6 +213,7 @@
 			isa = PBXGroup;
 			children = (
 				6A0C34B62D12A2D200D97C6C /* APIService.swift */,
+				6A9E0BD92D13F33A0044AFDD /* ExtensionColors.swift */,
 			);
 			path = HelperClass;
 			sourceTree = "<group>";
@@ -371,10 +371,10 @@
 			files = (
 				6A9E0BD82D13D9D40044AFDD /* UserManager.swift in Sources */,
 				6A0C34A52D123E3A00D97C6C /* RegisterView.swift in Sources */,
-				6A0C34AB2D123E8000D97C6C /* RegisterEntity.swift in Sources */,
 				6A0C34A72D123E5300D97C6C /* RegisterInteractor.swift in Sources */,
 				6A0C34B92D12DCD800D97C6C /* LoginValidation.swift in Sources */,
 				6A0C34B02D12509500D97C6C /* DashboardView.swift in Sources */,
+				6A9E0BDA2D13F33A0044AFDD /* ExtensionColors.swift in Sources */,
 				6A09527E2D113CB800F26397 /* SplashScreenView.swift in Sources */,
 				6A0C34A92D123E6C00D97C6C /* RegisterPresenter.swift in Sources */,
 				6A0C34B72D12A2D200D97C6C /* APIService.swift in Sources */,

@@ -47,8 +47,6 @@ class LoginPresenter: LoginPresenterProtocol{
         
         if email == "sarikaselvi46@gmail.com" && password == "Infosys@2024" {
             let userInfo = loginInteractor.authenticateUser(with: credential)
-            print(userInfo)
-            
             if let _ = userInfo  {
                 loginRouter.navigateToDashboardView()
             }
