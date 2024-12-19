@@ -6,8 +6,10 @@ class SplashScreenRouter{
     init() {}
     
     func navigateToLoginView() -> LoginView{
+        let interactor = LoginInteractor()
         let router = LoginRouter()
-        return LoginView(router: router)
+        let presenter = LoginPresenter(loginInteractor: interactor, loginRouter: router)
+        return LoginView(loginPresenter: presenter, loginRouter: router)
         
     }
     

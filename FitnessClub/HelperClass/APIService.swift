@@ -1,6 +1,4 @@
-
 import Foundation
-
 
 protocol APIServiceProtocol {
     func sendRequest<T: Decodable, U: Encodable>(

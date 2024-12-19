@@ -45,6 +45,7 @@ struct DashboardView: View {
                 }
                 .tag(4)
         }
+        .navigationBarBackButtonHidden(true)
     }
 }
 

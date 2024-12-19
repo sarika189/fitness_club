@@ -11,7 +11,8 @@ struct SplashScreenView: View {
     var body: some View {
         ZStack {
             // Gradient background
-            LinearGradient(gradient: Gradient(colors: [.blue, .purple]), startPoint: .topLeading, endPoint: .bottomTrailing) .edgesIgnoringSafeArea(.all)
+            LinearGradient(gradient: Gradient(colors: [.blue, .purple]),
+                           startPoint: .topLeading, endPoint: .bottomTrailing).edgesIgnoringSafeArea(.all)
             // Image and button
             VStack {
                 Image("fitnessLogo")
@@ -28,7 +29,6 @@ struct SplashScreenView: View {
                         .foregroundColor(.purple)
                         .padding(.top, 20)
                 }
-                
                 HStack{
                     Text("Don't have account ?")
                         .foregroundColor(.white)
@@ -40,8 +40,6 @@ struct SplashScreenView: View {
                     }
                 }
                 .padding(.top, 20)
-                
-                
             }
         }
     }
@@ -52,3 +50,4 @@ struct ContentView_Previews: PreviewProvider {
         SplashScreenView(router: .init())
     }
 }
+

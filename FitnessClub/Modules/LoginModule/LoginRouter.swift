@@ -1,15 +1,18 @@
-
 import Foundation
 
-class LoginRouter{
+protocol LoginRouterProtocol{
+    func navigateToDashboardView()
+    var isLoggedIn: Bool { get set }
+}
+
+class LoginRouter: LoginRouterProtocol, ObservableObject{
     
-    init(){
-        
-    }
+    @Published
+    var isLoggedIn: Bool = false
     
-    func navigateToDashboardView() -> DashboardView{
-        
-        return DashboardView()
+    func navigateToDashboardView(){
+        isLoggedIn = true
+      
     }
     
 }

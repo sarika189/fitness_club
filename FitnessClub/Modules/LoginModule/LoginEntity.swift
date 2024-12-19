@@ -1,12 +1,17 @@
-
-
 import Foundation
 
-
-struct LoginEntity : Encodable{
-    let email, password: String
+struct UserInfo: Codable {
+    var name: String
+    var email: String
+    var mobileNumber: String
+    var password: String
+    var gender: String
 }
 
-struct UserInfo: Codable{
-    let firstName, lastName: String
+struct UserInfoModel: Encodable{
+    var name: String
+    var email: String
+    var mobileNumber: String
+    var password: String
+    var gender: String
 }
