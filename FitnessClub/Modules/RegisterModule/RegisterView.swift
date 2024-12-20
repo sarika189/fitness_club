@@ -23,18 +23,21 @@ struct RegisterView: View {
                     RegisterTextField(name: $presenter.email,
                                       title: "Email").autocapitalization(.none)
                     RegisterTextField(name: $presenter.mobileNumber,
-                                      title: "Mobile Number")
+                                      title: "Mobile Number").keyboardType(.numberPad)
                     RegisterTextField(name: $presenter.password,
                                       title: "Create Password",
                                       isSecureField: true)
-                    Picker("Gender", selection: $presenter.gender) {
-                        ForEach(Gender.allCases, id: \.self) { gender in
-                            Text(gender.rawValue).bold()
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text("Gender").font(.title3)
+                        Picker("Gender", selection: $presenter.gender) {
+                            ForEach(Gender.allCases, id: \.self) { gender in
+                                Text(gender.rawValue).bold()
+                            }
                         }
+                        .pickerStyle(SegmentedPickerStyle())
+                        .padding(.top, 10)
+                        .frame(height: 35)
                     }
-                    .pickerStyle(SegmentedPickerStyle())
-                    .padding(.top, 10)
-                    .frame(height: 35)
                     HStack {
                         SquareCheckmarkButton(isChecked: $presenter.isTermsAndConditionsChecked)
                         Text("I agree with terms & conditions")

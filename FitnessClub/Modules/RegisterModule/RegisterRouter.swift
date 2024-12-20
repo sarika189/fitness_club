@@ -10,7 +10,8 @@ class RegisterRouter: RegisterRouterProtocol, ObservableObject {
   var isRegistrationComplete: Bool = false
   
   func navigateToDashboardView() -> DashboardView {
-    return DashboardView()
+      let workoutPresenter = WorkoutPresenter()
+      return DashboardView(presenter: workoutPresenter)
   }
   
 }

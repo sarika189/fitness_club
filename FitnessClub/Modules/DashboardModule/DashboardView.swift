@@ -2,80 +2,96 @@ import SwiftUI
 
 struct DashboardView: View {
     @State private var selectedTab = 0
-
+    
+    @ObservedObject
+    var presenter: WorkoutPresenter
+    let apiService = ExerciseService()
     var body: some View {
-        TabView(selection: $selectedTab) {
-            // Plan view
-            PlanView()
-                .tabItem {
-                    Image(systemName: "calendar")
-                    Text("Plan")
+        VStack{
+            TopBarView().frame(height: 40)
+            TabView(selection: $selectedTab) {
+                ForEach(DashboardTab.allCases, id: \.self) { tab in
+                    tab.destinationView(presenter: presenter, apiService: apiService).tabItem {
+                        Image(systemName:tab.icon)
+                            .foregroundColor(Color("ThemeColor"))
+                        Text(tab.title)
+                            .foregroundColor(Color("ThemeColor"))
+                    }.tag(tab.rawValue)
                 }
-                .tag(0)
-
-            // Heart (Calories) view
-            HeartView()
-                .tabItem {
-                    Image(systemName: "heart.fill")
-                    Text("Calories")
-                }
-                .tag(1)
-
-            // Workouts view
-            WorkoutsView()
-                .tabItem {
-                    Image(systemName: "figure.walk")
-                    Text("Workouts")
-                }
-                .tag(2)
-
-            // Profile view
-            ProfileView()
-                .tabItem {
-                    Image(systemName: "person.crop.circle")
-                    Text("Profile")
-                }
-                .tag(3)
-
-            // Preferences view
-            PreferencesView()
-                .tabItem {
-                    Image(systemName: "gear")
-                    Text("Preferences")
-                }
-                .tag(4)
+            }
+            .accentColor(Color("ThemeColor"))
+            .navigationBarBackButtonHidden(true)
         }
-        .navigationBarBackButtonHidden(true)
     }
 }
 
-struct PlanView: View {
+struct TopBarView: View {
     var body: some View {
-        Text("Plan Screen")
-            .font(.largeTitle)
-            .padding()
+        HStack {
+            Text("Fitness Club")
+                .font(.title2)
+                .fontWeight(.bold)
+                .foregroundColor(.white)
+            Spacer()
+            Image(systemName: "person.crop.circle")
+                .font(.title)
+                .padding()
+                .foregroundColor(.white)
+        }
+        .padding()
+        .background(Color("ThemeColor"))
     }
 }
 
-struct HeartView: View {
+enum DashboardTab: Int, CaseIterable {
+    case calendar, health,workouts, profile,preferences
+    
+    var title: String {
+        switch self {
+        case .calendar: return "Plan"
+        case .health: return "Health"
+        case .workouts: return "Workouts"
+        case .profile: return "Profile"
+        case .preferences: return "Preferences"
+        }
+    }
+    
+    var icon: String {
+        switch self {
+        case .calendar: return "calendar"
+        case .health: return "heart"
+        case .workouts: return "figure.step.training"
+        case .profile: return "person.crop.circle"
+        case .preferences: return "gear"
+        }
+    }
+    
+    @ViewBuilder
+    func destinationView(presenter: WorkoutPresenter, apiService: ExerciseService) -> some View{
+        switch self {
+            case .profile: ProfileView(presenter: presenter)
+            case .workouts: WorkoutsView(presenter: presenter, apiService: apiService)
+            case .calendar: PlanView()
+            case .health: HealthView()
+            case .preferences: PreferencesView()
+        }
+    }
+    
+    var iconColor: Color {
+        switch self {
+            case .profile: return .blue
+            case .workouts: return .orange
+            case .calendar: return .purple
+            case .health: return .red
+            case .preferences: return .gray
+        }
+    }
+    
+}
+
+struct HealthView: View {
     var body: some View {
         Text("Calories Screen")
-            .font(.largeTitle)
-            .padding()
-    }
-}
-
-struct WorkoutsView: View {
-    var body: some View {
-        Text("Workouts Screen")
-            .font(.largeTitle)
-            .padding()
-    }
-}
-
-struct ProfileView: View {
-    var body: some View {
-        Text("Profile Screen")
             .font(.largeTitle)
             .padding()
     }
@@ -91,7 +107,8 @@ struct PreferencesView: View {
 
 struct DashboardView_Previews: PreviewProvider {
     static var previews: some View {
-        DashboardView()
+        let workoutPresenter = WorkoutPresenter()
+        DashboardView(presenter: workoutPresenter)
     }
 }
 

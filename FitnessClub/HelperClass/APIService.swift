@@ -13,6 +13,9 @@ protocol APIServiceProtocol {
 
 //Base Class for APIService implementation
 final class APIService: APIServiceProtocol{
+    static let shared = APIService()
+     private init() {}
+    
     func sendRequest<T, U>(
         endpoint: String,
         method: HTTPMethod,

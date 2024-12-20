@@ -52,7 +52,7 @@ struct LoginView: View {
             .padding()
             .navigationBarBackButtonHidden(true)
         }
-        .navigationDestination(isPresented: $loginRouter.isLoggedIn, destination: {DashboardView()})
+        .navigationDestination(isPresented: $loginRouter.isLoggedIn, destination: {DashboardView(presenter: .init())})
         
     }
 }
@@ -201,3 +201,4 @@ extension View {
                                  errorMessage: errorMessage))
     }
 }
+
